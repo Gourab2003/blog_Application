@@ -1,0 +1,12 @@
+<%-include("partials/header.ejs") %>
+
+<h1>Contact Me</h1>
+<form action="submit" method="post">
+  <input name="name" type="text" class="feedback-input" placeholder="Name" required />
+  <input name="email" type="text" class="feedback-input" placeholder="Email" required />
+  <textarea name="text" class="feedback-input" placeholder="Comment" required></textarea>
+  <input type="submit" value="SUBMIT" />
+</form>
+
+
+<%-include("partials/footer.ejs") %>

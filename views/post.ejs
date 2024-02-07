@@ -1,0 +1,10 @@
+<%- include('partials/header.ejs') %>
+
+<main class="container">
+    <h1><%= post.title %></h1>
+    <p><strong>Author:</strong> <%= post.author %></p>
+    <p><strong>Date:</strong> <%= post.date %></p>
+    <p><%= post.content %></p>
+</main>
+
+<%- include('partials/footer.ejs') %>
