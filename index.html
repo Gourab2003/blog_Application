@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Blog</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ejs/3.1.6/ejs.min.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    ejs.render(require('./index.ejs'), data, (err, html) => {
+      if (err) {
+        console.error(err);
+      } else {
+        document.getElementById('app').innerHTML = html;
+      }
+    });
+  </script>
+</body>
+</html>
