@@ -1,11 +1,56 @@
 import  express from "express";
 import bodyParser from "body-parser";
+import mongoose, {Schema} from "mongoose";
 import fs from "fs"
+import { config } from "process";
 
 const app = express();
 const port = 3000;
+// mongodb connections
+mongoose.connect("mongodb://localhost:27017/Gourab")
+.then(()=>{
+    console.log("mongodb is connected");
+}).catch((err) => {
+    console.log(err.message, "connection failed");
+})
+
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
+
+const blogSchema = new Schema({
+    title: {
+        type: String,
+        required: true,
+        upperCase: true,
+    },
+    author: {
+        type: String,
+        required: true,
+    },
+    content: {
+        type: String,
+        required: true,
+    }
+}, {timestamps: true});
+
+const Blog =  mongoose.model("Blog",blogSchema);
+
+const commentsSchema = new Schema({
+    name:{
+        type: String,
+        required: true,
+    },
+    email:{
+        type: String, 
+        required: true
+    },
+    comments:{
+        type: String,
+        required: true,
+    }
+}, {timestamps: true});
+
+const Comments = mongoose.model("Comments",commentsSchema);
 
 let Data;
 
@@ -82,6 +127,6 @@ app.post('/createBlog', (req, res) => {
     res.redirect('/');
 });
 
-app.listen(3000, ()=>{
+app.listen(port, ()=>{
     console.log("listning on port 3000");
 })
