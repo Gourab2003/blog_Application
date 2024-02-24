@@ -17,6 +17,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 const blogSchema = new Schema({
+    id: {
+        type: String,
+        required: true,
+        unique: true,
+    },
     title: {
         type: String,
         required: true,
@@ -32,7 +37,10 @@ const blogSchema = new Schema({
     }
 }, { timestamps: true });
 
+blogSchema.index({ id: 1 }, { unique: true });
+
 const Blog = mongoose.model("Blog", blogSchema);
+
 
 const commentsSchema = new Schema({
     name: {
@@ -63,7 +71,7 @@ app.get("/", async (req, res) => {
 app.get('/post/:id', async (req, res) => {
     try {
         const postId = req.params.id;
-        const post = await Blog.findById(postId);
+        const post = await Blog.findById(postId); // Use findById with _id field
         if (!post) {
             res.status(404).send('Post not found');
         } else {
@@ -71,8 +79,10 @@ app.get('/post/:id', async (req, res) => {
         }
     } catch (error) {
         console.log("Error:", error.message);
+        res.status(500).send('Internal Server Error');
     }
 });
+
 
 app.get("/contact", (req, res) => {
     res.render("contact.ejs");
@@ -99,18 +109,21 @@ app.get("/createBlog", (req, res) => {
 
 app.post('/createBlog', async (req, res) => {
     try {
-        const blogs = await Blog.create({
+        const blog = await Blog.create({
             title: req.body.title,
             author: req.body.author,
             content: req.body.content,
         });
-        console.log("Blog created:", blogs);
+
+        console.log("Blog created:", blog);
         res.status(200).redirect("/");
     } catch (error) {
         console.log("Error:", error.message);
         res.status(500).send("Error creating blog post");
     }
 });
+
+
 
 app.listen(port, () => {
     console.log("Listening on port", port);
