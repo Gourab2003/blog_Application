@@ -37,8 +37,6 @@ const blogSchema = new Schema({
     }
 }, { timestamps: true });
 
-blogSchema.index({ id: 1 }, { unique: true });
-
 const Blog = mongoose.model("Blog", blogSchema);
 
 
