@@ -17,11 +17,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 const blogSchema = new Schema({
-    id: {
-        type: String,
-        required: true,
-        unique: true,
-    },
     title: {
         type: String,
         required: true,

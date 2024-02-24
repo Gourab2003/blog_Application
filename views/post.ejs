@@ -5,6 +5,9 @@
     <p><strong>Author:</strong> <%= post.author %></p>
     <p><strong>Date:</strong> <%= post.createdAt %></p>
     <p><%= post.content %></p>
+      <% if(post.UpadtedAt){ %> 
+    <p><strong>Upadted at:</strong> <%= post.UpadtedAt %></p>
+       <% } %>
 </main>
 
 <%- include('partials/footer.ejs') %>
